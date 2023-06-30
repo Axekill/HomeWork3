@@ -11,8 +11,8 @@ public class FacultyService {
     Map<Long, Faculty> facultyMap = new HashMap<>();
     Long facultyId = 0L;
     public Faculty addFaculty(Faculty faculty) {
+        faculty.setId(++facultyId);
         facultyMap.put(facultyId, faculty);
-        facultyId++;
         return faculty;
     }
     public  Faculty getFaculty(Long id) {
