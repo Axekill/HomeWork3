@@ -27,4 +27,8 @@ public class FacultyService {
     public Faculty removeFaculty(Long facultyId) {
         return facultyMap.remove(facultyId);
     }
+
+    public Faculty getFacultyColor(String color) {
+        return facultyMap.get(color);
+    }
 }

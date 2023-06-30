@@ -28,4 +28,7 @@ public class StudentService {
     }
 
 
+    public Student getStudentAge(int age) {
+        return students.get(age);
+    }
 }

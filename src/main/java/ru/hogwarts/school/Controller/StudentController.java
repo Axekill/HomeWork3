@@ -26,6 +26,14 @@ public class StudentController {
         }
         return ResponseEntity.ok(student);
     }
+    @GetMapping("{age}")
+    public ResponseEntity<Student> getStudent(@PathVariable int age) {
+        Student student = studentService.getStudentAge(age);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
+    }
     @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
         Student editStudent = studentService.editStudent(student.getId(), student);

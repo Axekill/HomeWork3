@@ -40,4 +40,12 @@ public class FacultyController {
         }
         return ResponseEntity.ok(faculty);
     }
+    @GetMapping("{color}")
+    public ResponseEntity<Faculty> getFacultyColor(@PathVariable String color) {
+        Faculty faculty= facultyService.getFacultyColor(color);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty);
+    }
 }
