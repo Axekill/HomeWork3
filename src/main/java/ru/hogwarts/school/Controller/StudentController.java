@@ -5,42 +5,54 @@ import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
+import java.util.Collection;
+
 @RestController
-@RequestMapping("/student")
+@RequestMapping("student")
 public class StudentController {
-    private final StudentService studentService ;
+    private final StudentService studentService;
+
     public StudentController(StudentService studentService) {
         this.studentService = studentService;
     }
+
     @PostMapping
     public ResponseEntity<Student> add(@RequestBody Student student) {
         Student add = studentService.addStudent(student);
         return ResponseEntity.ok(add);
     }
 
+    @GetMapping
+    public ResponseEntity<Collection<Student>> getAll() {
+        return ResponseEntity.ok(studentService.getAll());
+    }
+
     @GetMapping("{id}")
-    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
-        Student student = studentService.getStudent(id);
+    public ResponseEntity<Student> findStudent(@PathVariable Long id) {
+        Student student = studentService.findStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
     }
+
     @GetMapping("{age}")
-    public ResponseEntity<Student> getStudent(@PathVariable int age) {
+    public ResponseEntity<Student> getStudentAge(@PathVariable int age) {
         Student student = studentService.getStudentAge(age);
         if (student == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(student);
     }
+
     @PutMapping
     public ResponseEntity<Student> editStudent(@RequestBody Student student) {
-        Student editStudent = studentService.editStudent(student.getId(), student);
+        Student editStudent = studentService.editStudent(student);
         return ResponseEntity.ok(editStudent);
     }
+
     @DeleteMapping("{id}")
-    public ResponseEntity<Student>removeStudent(@PathVariable Long id) {
+    public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
         Student student = studentService.removeStudent(id);
         if (student == null) {
             return ResponseEntity.notFound().build();
