@@ -6,10 +6,11 @@ import ru.hogwarts.school.model.Student;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class StudentService {
-    Map<Long, Student> students = new HashMap<>();
+   private final Map<Long, Student> students = new HashMap<>();
   private Long studentId= 0L;
   public Student addStudent(Student student) {
       student.setId(++studentId);
@@ -32,7 +33,9 @@ public class StudentService {
       return students.values();
     }
 
-    public Student getStudentAge(int age) {
-        return students.get(age);
+    public Collection<Student> getStudentAge(int age) {
+        return students.values().stream()
+                .filter(i->i.getAge()==age)
+                .collect(Collectors.toList());
     }
 }

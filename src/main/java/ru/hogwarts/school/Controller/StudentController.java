@@ -37,12 +37,9 @@ public class StudentController {
     }
 
     @GetMapping("{age}")
-    public ResponseEntity<Student> getStudentAge(@PathVariable int age) {
-        Student student = studentService.getStudentAge(age);
-        if (student == null) {
-            return ResponseEntity.notFound().build();
-        }
-        return ResponseEntity.ok(student);
+    public ResponseEntity<Collection<Student>> getStudentAge(@PathVariable int age) {
+        return ResponseEntity.ok(studentService.getStudentAge(age));
+
     }
 
     @PutMapping
