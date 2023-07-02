@@ -11,10 +11,10 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService {
    private final Map<Long, Student> students = new HashMap<>();
-  private Long studentId= 0L;
+  private long id= 0;
   public Student addStudent(Student student) {
-      student.setId(++studentId);
-      students.put(studentId, student);
+      student.setId(++id);
+      students.put(id, student);
       return student;
   }
   public Student findStudent(Long id) {

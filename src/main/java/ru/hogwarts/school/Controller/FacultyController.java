@@ -33,7 +33,7 @@ public class FacultyController {
 
     @PutMapping
     public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
-        Faculty editFaculty = facultyService.editFaculty(faculty.getId(), faculty);
+        Faculty editFaculty = facultyService.editFaculty(faculty);
         return ResponseEntity.ok(editFaculty);
     }
 
@@ -46,8 +46,8 @@ public class FacultyController {
         return ResponseEntity.ok(faculty);
     }
 
-    @GetMapping("{color}")
-    public ResponseEntity<Collection<Faculty>> getFacultyColor(@PathVariable String color) {
-        return ResponseEntity.ok(facultyService.getFacultyColor(color));
+    @GetMapping("/color")
+    public Collection<Faculty> getFacultyColor(@RequestParam String color) {
+        return facultyService.getFacultyColor(color);
     }
 }
