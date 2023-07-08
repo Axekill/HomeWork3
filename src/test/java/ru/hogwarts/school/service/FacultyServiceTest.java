@@ -6,7 +6,7 @@ import ru.hogwarts.school.model.Faculty;
 import static org.junit.jupiter.api.Assertions.*;
 
 class FacultyServiceTest {
-FacultyService service=new FacultyService();
+FacultyService service=new FacultyService(facultyRepository);
     @Test
     void addFaculty() {
         service.addFaculty(new Faculty(1L,"fggd","red"));

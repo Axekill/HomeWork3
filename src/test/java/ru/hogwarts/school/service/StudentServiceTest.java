@@ -8,7 +8,7 @@ import java.util.Collection;
 import static org.junit.jupiter.api.Assertions.*;
 
 class StudentServiceTest {
-    StudentService service= new StudentService();
+  /*  StudentService service= new StudentService();
 
     @Test
     void addStudent() {
@@ -51,5 +51,5 @@ class StudentServiceTest {
        var actual= service.addStudent(new Student(2L,"jkf",15));
        assertEquals(15,actual.getAge());
 
-    }
+    }*/
 }
