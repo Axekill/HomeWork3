@@ -21,17 +21,16 @@ public class FacultyService {
     }
 
     public Faculty getFaculty(Long id) {
-        return facultyRepository.findById(id).get();
+        return facultyRepository.findById(id).orElse(null);
     }
 
     public Faculty editFaculty(Faculty faculty) {
-         facultyRepository.findById(faculty.getId())
-                 .ifPresent(i->{
+      return  facultyRepository.findById(faculty.getId())
+                 .map(i->{
                      i.setName(faculty.getName());
                      i.setColor(faculty.getColor());
-                     facultyRepository.save(i);
-                 });
-         return faculty;
+                    return facultyRepository.save(i);
+                 }).orElse(null);
     }
 
     public void removeFaculty(Long id) {

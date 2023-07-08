@@ -21,17 +21,17 @@ public class StudentService {
     }
 
     public Student findStudent(Long id) {
-        return studentRepository.findById(id).get();
+        return studentRepository.findById(id).orElse(null);
     }
 
     public Student editStudent(Student student) {
-        studentRepository.findById(student.getId())
-                .ifPresent(i->{
+      return   studentRepository.findById(student.getId())
+                .map(i->{
                     i.setName(student.getName());
                     i.setAge(student.getAge());
-                    studentRepository.save(i);
-                });
-        return student;
+                  return  studentRepository.save(i);
+                }).orElse(null);
+
     }
 
     public void removeStudent(Long id) {
