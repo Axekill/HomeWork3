@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
@@ -25,24 +26,29 @@ public class StudentService {
     }
 
     public Student editStudent(Student student) {
-      return   studentRepository.findById(student.getId())
-                .map(i->{
+        return studentRepository.findById(student.getId())
+                .map(i -> {
                     i.setName(student.getName());
                     i.setAge(student.getAge());
-                  return  studentRepository.save(i);
+                    i.setFaculty(student.getFaculty());
+                    return studentRepository.save(i);
                 }).orElse(null);
-
     }
 
     public void removeStudent(Long id) {
-         studentRepository.deleteById(id);
+        studentRepository.deleteById(id);
     }
 
     public Collection<Student> getAll() {
         return studentRepository.findAll();
     }
 
-    public Collection<Student> getStudentAge(int age) {
-        return studentRepository.findByAgeLike(age);
+    public Collection<Student> findAgeBetween(int minAge, int maxAge) {
+        return studentRepository.findAllByAgeBetween(minAge, maxAge);
+    }
+
+    public Faculty findByFaculty_Id(long id) {
+        return studentRepository.findById(id)
+                .map(Student::getFaculty).orElse(null);
     }
 }

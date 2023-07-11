@@ -36,10 +36,15 @@ public class StudentController {
         return ResponseEntity.ok(student);
     }
 
-    @GetMapping("/age")
-    public Collection<Student> getStudentAge(@RequestParam int age) {
-        return studentService.getStudentAge(age);
+    @GetMapping("/findAgeBetween")
+    Collection<Student>findAgeBetween(@RequestParam int minAge,
+                                      @RequestParam int maxAge) {
+        return studentService.findAgeBetween(minAge, maxAge);
+    }
 
+    @GetMapping("/{id}/faculty")
+    public String findByFaculty_Id(@PathVariable long id) {
+        return studentService.findByFaculty_Id(id).getName();
     }
 
     @PutMapping
