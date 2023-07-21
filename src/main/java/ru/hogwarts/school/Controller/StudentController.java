@@ -58,4 +58,19 @@ public class StudentController {
         studentService.removeStudent(id);
         return ResponseEntity.ok().build();
     }
+
+    @GetMapping("/count")
+    public long amountStudents() {
+        return studentService.findByAmountStudents();
+    }
+
+    @GetMapping("/avgAge")
+    public double findAvgAgeStudents() {
+        return studentService.findByAvgAgeStudents();
+    }
+
+    @GetMapping("/last")
+    public Collection<Student> lastFiveStudents() {
+        return  studentService.lastFiveStudents();
+    }
 }

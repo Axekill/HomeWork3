@@ -1,17 +1,20 @@
 package ru.hogwarts.school.Controller;
 
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.FacultyRepository;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -29,6 +32,13 @@ public class FacultyControllerTest {
     private FacultyController facultyController;
     @Autowired
     private TestRestTemplate restTemplate;
+    @Autowired
+    FacultyRepository facultyRepository;
+
+    @AfterEach
+    public void resetDb() {
+        facultyRepository.deleteAll();
+    }
 
     @Test
     void contextLoads() throws Exception {
@@ -95,8 +105,11 @@ public class FacultyControllerTest {
 
         faculty.setStudents(students);
 
-        ResponseEntity<Faculty> facultyEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/1" + "/student",
-                HttpMethod.GET, httpFaculty, Faculty.class);
+        ResponseEntity<List<Faculty>> facultyEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/1" + "/students",
+                HttpMethod.GET,
+                httpFaculty,
+                new ParameterizedTypeReference<>() {
+                });
         Assertions.assertThat(facultyEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
         // students = Collections.singletonList(restTemplate.postForObject("http://localhost:" + port + "/student", students, Student.class));
 
@@ -114,8 +127,11 @@ public class FacultyControllerTest {
         faculty.setId(1L);
         faculty.setName("Lypoos");
         faculty.setColor("Violet");
-        ResponseEntity<Faculty> facultyEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/findByColorOrName?color=Violet",
-                HttpMethod.GET, httpFaculty, Faculty.class);
+        ResponseEntity<List<Faculty>> facultyEntity = restTemplate.exchange("http://localhost:" + port + "/faculty/findByColorOrName?color=Violet",
+                HttpMethod.GET,
+                httpFaculty,
+                new ParameterizedTypeReference<>() {
+                });
         Assertions.assertThat(facultyEntity.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 }

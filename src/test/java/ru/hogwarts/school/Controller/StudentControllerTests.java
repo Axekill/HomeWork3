@@ -93,7 +93,8 @@ public class StudentControllerTests {
         mockMvc.perform(MockMvcRequestBuilders
                         .get("/student")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(students.size()));
     }
 
     @Test
