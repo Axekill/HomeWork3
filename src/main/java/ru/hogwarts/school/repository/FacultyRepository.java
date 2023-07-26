@@ -15,5 +15,6 @@ public interface FacultyRepository extends JpaRepository<Faculty, Long> {
   @Query("select s from Student s join Faculty f on s.faculty.id=f.id where f.id=:id")
   Collection<Student> findAllStudentsByFaculty_Id(Long id);
 
+    List<Faculty> getFacultiesByColor(String color);
 
 }

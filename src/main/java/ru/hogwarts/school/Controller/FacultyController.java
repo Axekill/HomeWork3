@@ -55,4 +55,9 @@ public class FacultyController {
                                                  @RequestParam(required = false) String name) {
         return facultyService.findByColorOrName(color, name);
     }
+    @GetMapping("/color/{color}")
+    public ResponseEntity<Collection<Faculty>>getColorFaculty(@PathVariable String color) {
+        Collection<Faculty> faculties = facultyService.getColorFaculty(color);
+        return ResponseEntity.ok(faculties);
+    }
 }

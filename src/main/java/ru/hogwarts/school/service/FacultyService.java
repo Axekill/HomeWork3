@@ -49,4 +49,7 @@ public class FacultyService {
         return facultyRepository.findAllStudentsByFaculty_Id(id);
        /* return facultyRepository.findAllStudentsByFaculty_Id(id);*/
     }
+    public Collection<Faculty>getColorFaculty(String color) {
+        return facultyRepository.getFacultiesByColor(color);
+    }
 }

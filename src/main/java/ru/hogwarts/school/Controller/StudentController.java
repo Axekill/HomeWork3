@@ -37,8 +37,8 @@ public class StudentController {
     }
 
     @GetMapping("/findAgeBetween")
-    Collection<Student>findAgeBetween(@RequestParam int minAge,
-                                      @RequestParam int maxAge) {
+    Collection<Student> findAgeBetween(@RequestParam int minAge,
+                                       @RequestParam int maxAge) {
         return studentService.findAgeBetween(minAge, maxAge);
     }
 
@@ -71,6 +71,13 @@ public class StudentController {
 
     @GetMapping("/last")
     public Collection<Student> lastFiveStudents() {
-        return  studentService.lastFiveStudents();
+        return studentService.lastFiveStudents();
     }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<Collection<Student>> getName(@PathVariable String name) {
+        Collection<Student>students= studentService.getName(name);
+        return ResponseEntity.ok(students);
+    }
+
 }
