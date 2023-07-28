@@ -1,7 +1,7 @@
 create table people(
                        id real,
                        name text primary key ,
-                       age integer,
+                       age int,
                        drivers_license boolean,
                        car_id text references car(id)
 
@@ -11,7 +11,7 @@ create table car(
                     id text primary key ,
                     brand text,
                     model text,
-                    cash integer
+                    cash int
 );
 
 select name, age, drivers_license, brand, model, cash
