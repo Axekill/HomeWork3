@@ -8,6 +8,9 @@ import ru.hogwarts.school.service.FacultyService;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/faculty")
@@ -59,5 +62,14 @@ public class FacultyController {
     public ResponseEntity<Collection<Faculty>>getColorFaculty(@PathVariable String color) {
         Collection<Faculty> faculties = facultyService.getColorFaculty(color);
         return ResponseEntity.ok(faculties);
+    }
+    @GetMapping("/longname")
+    public Optional<String> getLongNameFaculty() {
+        return facultyService.getLongNameFaculty();
+    }
+
+    @GetMapping("/ch")
+    public Integer chapter4() {
+        return facultyService.chapter4();
     }
 }

@@ -8,14 +8,14 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.FacultyRepository;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Stream;
 
 @Service
 public class FacultyService {
     private final FacultyRepository facultyRepository;
     Logger logger = LoggerFactory.getLogger(FacultyService.class);
+
     @Autowired
     public FacultyService(FacultyRepository facultyRepository) {
         this.facultyRepository = facultyRepository;
@@ -23,13 +23,13 @@ public class FacultyService {
 
     public Faculty addFaculty(Faculty faculty) {
         logger.info("запустился метод создания факультета");
-        logger.debug("создали факультет: {}",faculty);
+        logger.debug("создали факультет: {}", faculty);
         return facultyRepository.save(faculty);
     }
 
     public Faculty getFaculty(Long id) {
         logger.info("запустился метод поиска факультета по id");
-        logger.error("это фиаско братан"+id);
+        logger.error("это фиаско братан" + id);
         return facultyRepository.findById(id).orElse(null);
     }
 
@@ -49,7 +49,7 @@ public class FacultyService {
         logger.info("запустился метод удаления факультета");
         logger.warn("метод удалит данные навсегда");
         facultyRepository.deleteById(id);
-        logger.debug("факультет {} удален ",id);
+        logger.debug("факультет {} удален ", id);
     }
 
 
@@ -61,10 +61,24 @@ public class FacultyService {
     public Collection<Student> findStudents(Long id) {
         logger.info("запустился метод вывода списка студентов факультета");
         return facultyRepository.findAllStudentsByFaculty_Id(id);
-       /* return facultyRepository.findAllStudentsByFaculty_Id(id);*/
+        /* return facultyRepository.findAllStudentsByFaculty_Id(id);*/
     }
-    public Collection<Faculty>getColorFaculty(String color) {
+
+    public Collection<Faculty> getColorFaculty(String color) {
         logger.info("запустился метод вывода факультета по цвету");
         return facultyRepository.getFacultiesByColor(color);
+    }
+
+    public Optional<String> getLongNameFaculty() {
+        return facultyRepository.findAll().stream()
+                .map(Faculty::getName)
+                .max(Comparator.comparingInt(String::length));
+    }
+
+    public Integer chapter4() {
+        return Stream.iterate(1, a -> a + 1)
+                .parallel()
+                .limit(1_000_000)
+                .reduce(0, Integer::sum);
     }
 }

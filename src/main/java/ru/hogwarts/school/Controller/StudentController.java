@@ -6,6 +6,9 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
 
 import java.util.Collection;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/student")
@@ -76,8 +79,17 @@ public class StudentController {
 
     @GetMapping("/name/{name}")
     public ResponseEntity<Collection<Student>> getName(@PathVariable String name) {
-        Collection<Student>students= studentService.getName(name);
+        Collection<Student> students = studentService.getName(name);
         return ResponseEntity.ok(students);
     }
 
+    @GetMapping("/name_is_a")
+    public Map<String, List<Student>> getNameBeginA() {
+        return studentService.getNameBeginA();
+    }
+
+    @GetMapping("avg_age_stream")
+    public double getAvgAgeStream() {
+        return studentService.getAvgAgeStream();
+    }
 }

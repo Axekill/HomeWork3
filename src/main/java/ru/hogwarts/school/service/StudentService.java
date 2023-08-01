@@ -9,6 +9,11 @@ import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Service
 public class StudentService {
@@ -84,5 +89,18 @@ public class StudentService {
     public Collection<Student> getName(String name) {
         logger.info("запустился метод вывода студента по имени");
         return studentRepository.getStudentsByName(name);
+    }
+
+    public Map<String, List<Student>> getNameBeginA() {
+        return studentRepository.findAll().stream()
+                .filter(student -> student.getName().startsWith("A"))
+                .collect(Collectors.groupingBy(Student::getName));
+    }
+
+    public double getAvgAgeStream() {
+        return studentRepository.findAll().stream()
+                .collect(
+                        Collectors.averagingDouble(Student::getAge)
+                );
     }
 }
