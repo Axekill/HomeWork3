@@ -1,5 +1,6 @@
 package ru.hogwarts.school.service;
 
+import org.hibernate.annotations.Synchronize;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +9,7 @@ import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.repository.StudentRepository;
 
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -102,5 +100,57 @@ public class StudentService {
                 .collect(
                         Collectors.averagingDouble(Student::getAge)
                 );
+    }
+
+    public void getStudentOfStream() {
+        var students = studentRepository.findAll()
+                .stream()
+                .limit(6)
+                .map(Student::getName)
+                .toList();
+
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+
+
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+
+        }).start();
+    }
+
+    public void getStudentOfStreamSync() {
+        var students = studentRepository.findAll()
+                .stream()
+                .limit(6)
+                .map(Student::getName)
+                .toList();
+
+        print(students.get(0));
+        print(students.get(1));
+
+
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+
+        }).start();
+
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+
+        }).start();
+    }
+
+    private synchronized void print(Object obj) {
+        System.out.println(obj.toString());
     }
 }

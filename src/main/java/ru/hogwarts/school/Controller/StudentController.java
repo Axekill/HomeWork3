@@ -92,4 +92,14 @@ public class StudentController {
     public double getAvgAgeStream() {
         return studentService.getAvgAgeStream();
     }
+
+    @GetMapping("/stream-students")
+    public void getStudentsOfStream() {
+        studentService.getStudentOfStream();
+    }
+
+    @GetMapping("/stream-sync-students")
+    public void getStudentOfStreamSync() {
+        studentService.getStudentOfStreamSync();
+    }
 }
